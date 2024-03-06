@@ -41,6 +41,7 @@ const fr: Translations = {
     passwordFieldLabel: "Mot de passe",
     emailFieldPlaceholder: "Entrez votre adresse e-mail",
     passwordFieldPlaceholder: "Mot de passe super secret ici",
+    tapToLoginGoogle: "Google",
     tapToSignIn: "Appuyez pour vous connecter !",
     hint: "Astuce : vous pouvez utiliser n'importe quelle adresse e-mail et votre mot de passe préféré :)",
   },

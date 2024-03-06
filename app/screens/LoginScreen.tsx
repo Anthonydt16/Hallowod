@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { ComponentType, FC, useEffect, useMemo, useRef, useState } from "react"
-import { TextInput, TextStyle, ViewStyle } from "react-native"
+import { ImageStyle, TextInput, TextStyle, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
@@ -113,6 +113,15 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         preset="reversed"
         onPress={login}
       />
+      <Button
+        testID="login-button-google"
+        tx="loginScreen.tapToLoginGoogle"
+        style={$tapButtonGoogle}
+        LeftAccessory={(props) => (
+          <Icon containerStyle={props.style} style={$iconStyle} icon="google" />
+        )}
+        onPress={login}
+      />
     </Screen>
   )
 })
@@ -142,3 +151,10 @@ const $textField: ViewStyle = {
 const $tapButton: ViewStyle = {
   marginTop: spacing.xs,
 }
+
+const $tapButtonGoogle: ViewStyle = {
+  backgroundColor: colors.palette.neutral100,
+  marginTop: spacing.md,
+}
+
+const $iconStyle: ImageStyle = { width: 30, height: 30 }

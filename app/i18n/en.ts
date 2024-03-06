@@ -39,6 +39,7 @@ const en = {
     emailFieldPlaceholder: "Enter your email address",
     passwordFieldPlaceholder: "Super secret password here",
     tapToSignIn: "Tap to sign in!",
+    tapToLoginGoogle: "Google",
     hint: "Hint: you can use any email address and your favorite password :)",
   },
   demoNavigator: {
