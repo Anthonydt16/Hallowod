@@ -16,15 +16,14 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [attemptsCount, setAttemptsCount] = useState(0)
   const {
-    authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
+    authenticationStore: { authEmail, login, setAuthEmail, validationError },
   } = useStores()
 
   useEffect(() => {
     // Here is where you could fetch credentials from keychain or storage
     // and pre-fill the form fields.
-    setAuthEmail("ignite@infinite.red")
-    setAuthPassword("ign1teIsAwes0m3")
-
+    setAuthEmail("gogodix1@gmail.com")
+    setAuthPassword("toto")
     // Return a "cleanup" function that React will run when the component unmounts
     return () => {
       setAuthPassword("")
@@ -34,9 +33,10 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 
   const error = isSubmitted ? validationError : ""
 
-  function login() {
+  function sendLogin() {
     setIsSubmitted(true)
     setAttemptsCount(attemptsCount + 1)
+    login(authEmail, authPassword)
 
     if (validationError) return
 
@@ -45,9 +45,6 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     setIsSubmitted(false)
     setAuthPassword("")
     setAuthEmail("")
-
-    // We'll mock this with a fake token.
-    setAuthToken(String(Date.now()))
   }
 
   const PasswordRightAccessory: ComponentType<TextFieldAccessoryProps> = useMemo(
@@ -102,7 +99,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         secureTextEntry={isAuthPasswordHidden}
         labelTx="loginScreen.passwordFieldLabel"
         placeholderTx="loginScreen.passwordFieldPlaceholder"
-        onSubmitEditing={login}
+        onSubmitEditing={sendLogin}
         RightAccessory={PasswordRightAccessory}
       />
 
@@ -111,7 +108,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         tx="loginScreen.tapToSignIn"
         style={$tapButton}
         preset="reversed"
-        onPress={login}
+        onPress={sendLogin}
       />
       <Button
         testID="login-button-google"
@@ -120,7 +117,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         LeftAccessory={(props) => (
           <Icon containerStyle={props.style} style={$iconStyle} icon="google" />
         )}
-        onPress={login}
+        onPress={sendLogin}
       />
     </Screen>
   )

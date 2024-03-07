@@ -1,3 +1,4 @@
+import { userApi } from "app/services/api/user.api"
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 
 export const AuthenticationStoreModel = types
@@ -19,6 +20,17 @@ export const AuthenticationStoreModel = types
     },
   }))
   .actions((store) => ({
+    async login(email: string, password: string) {
+      const response = await userApi.login(email, password)
+      if (response.kind === "ok") {
+        store.authToken = response.token
+        store.authEmail = email
+      } else {
+        console.log(response, "response")
+
+        console.error(`Error logging in: ${JSON.stringify(response)}`)
+      }
+    },
     setAuthToken(value?: string) {
       store.authToken = value
     },
