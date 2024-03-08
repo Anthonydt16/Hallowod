@@ -6,13 +6,11 @@ import { ListView, Screen, Text } from "../components"
 import { useStores } from "../models"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { spacing } from "../theme"
-import { delay } from "../utils/delay"
 import { User } from "app/models/User"
 
 export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
   function DemoPodcastListScreen(_props) {
-    const { userStore } = useStores()
-
+    const { userStore, authenticationStore } = useStores()
     const [refreshing, setRefreshing] = React.useState(false)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isLoading, setIsLoading] = React.useState(false)
@@ -20,8 +18,11 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     // initially, kick off a background refresh without the refreshing UI
     useEffect(() => {
       ;(async function load() {
+        console.log('loading')
         setIsLoading(true)
-        await Promise.all([userStore.fetchUsers(), delay(750)])
+        if (authenticationStore.isAuthenticated) {
+          await userStore.fetchUsers(authenticationStore.authToken ?? '')
+        }
         setIsLoading(false)
       })()
     }, [userStore])
@@ -29,7 +30,10 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     // simulate a longer refresh, if the refresh is too fast for UX
     async function manualRefresh() {
       setRefreshing(true)
-      await Promise.all([userStore.fetchUsers(), delay(750)])
+      console.log("refreshing");
+      if (authenticationStore.isAuthenticated) {
+        await userStore.fetchUsers(authenticationStore.authToken ?? '')
+      }
       setRefreshing(false)
     }
 

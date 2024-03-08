@@ -17,7 +17,6 @@ export const UserModel = types
     firstName: "",
     lastName: "",
     email: "",
-    token: "",
     role: types.enumeration("RoleEnum", Object.values(RoleEnum)),
   })
   .actions(withSetPropAction)

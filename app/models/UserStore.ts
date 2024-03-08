@@ -2,7 +2,6 @@ import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { RoleEnum, UserModel } from "./User"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { userApi } from "app/services/api/user.api"
-
 export const UserStoreModel = types
   .model("UserStore")
   .props({
@@ -15,10 +14,20 @@ export const UserStoreModel = types
   })
   .actions(withSetPropAction)
   .actions((store) => ({
-    async fetchUsers() {
-      const response = await userApi.getUsers()
+    async fetchUsers(token: string) {
+      const response = await userApi.getUsers(token)
+      
       if (response.kind === "ok") {
-        store.setProp("users", response.users)
+        const userModels = response.users.map(user => UserModel.create({
+          email: user.email,
+          firstName: user.firstName,
+          id: user.id,
+          lastName: user.lastName,
+          role: user.role,
+        }));
+        console.log('userModels', userModels)
+        
+        store.setProp("users", userModels);
       } else {
         console.error(`Error fetching users: ${JSON.stringify(response)}`)
       }
@@ -35,7 +44,11 @@ export const UserStoreModel = types
       return store.role === RoleEnum.USER
     },
   }))
-  .actions((store) => ({}))
+  .actions((store) => ({
+    setRole(role: RoleEnum) {
+      store.role = role
+    },
+  }))
 
 export interface UserStore extends Instance<typeof UserStoreModel> {}
 export interface EpisodeStoreSnapshot extends SnapshotOut<typeof UserStoreModel> {}

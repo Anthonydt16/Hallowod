@@ -16,7 +16,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [attemptsCount, setAttemptsCount] = useState(0)
   const {
-    authenticationStore: { authEmail, login, setAuthEmail, validationError },
+    authenticationStore: { authEmail, login, setAuthEmail, validationError, setAuthToken }  
   } = useStores()
 
   useEffect(() => {
@@ -33,15 +33,16 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 
   const error = isSubmitted ? validationError : ""
 
-  function sendLogin() {
+  async function sendLogin() {
     setIsSubmitted(true)
     setAttemptsCount(attemptsCount + 1)
-    login(authEmail, authPassword)
 
     if (validationError) return
 
-    // Make a request to your server to get an authentication token.
-    // If successful, reset the fields and set the token.
+    const reponse = await login(authEmail, authPassword);
+    
+    setAuthToken(reponse?.token)
+    
     setIsSubmitted(false)
     setAuthPassword("")
     setAuthEmail("")
@@ -101,6 +102,8 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         placeholderTx="loginScreen.passwordFieldPlaceholder"
         onSubmitEditing={sendLogin}
         RightAccessory={PasswordRightAccessory}
+        helper={error}
+        status={error ? "error" : undefined}
       />
 
       <Button

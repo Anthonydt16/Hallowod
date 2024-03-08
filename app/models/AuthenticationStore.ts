@@ -20,20 +20,22 @@ export const AuthenticationStoreModel = types
     },
   }))
   .actions((store) => ({
-    async login(email: string, password: string) {
-      const response = await userApi.login(email, password)
-      if (response.kind === "ok") {
-        store.authToken = response.token
-        store.authEmail = email
-      } else {
-        console.log(response, "response")
-
-        console.error(`Error logging in: ${JSON.stringify(response)}`)
-      }
-    },
     setAuthToken(value?: string) {
       store.authToken = value
     },
+    
+    async login(email: string, password: string) {
+      const response = await userApi.login(email, password)
+      if (response.kind === "ok") {
+        return {
+          email,
+          token: response.token,
+        }
+      } else {
+        throw new Error("Error logging in")
+      }
+    },
+    
     setAuthEmail(value: string) {
       store.authEmail = value.replace(/ /g, "")
     },

@@ -4,6 +4,7 @@ import type { ApiConfig } from "./api.types"
 import { UserSnapshotIn } from "app/models/User"
 import { ApiClass } from "./apiClass"
 import { ApiResponse } from "apisauce"
+import { useStores } from "app/models"
 
 /**
  * Configuring the apisauce instance.
@@ -22,17 +23,18 @@ export class UserApi extends ApiClass {
     super(config)
   }
 
-  async getUsers(): Promise<{ kind: "ok"; users: UserSnapshotIn[] } | GeneralApiProblem> {
+  async getUsers(token : string): Promise<{ kind: "ok"; users: UserSnapshotIn[] } | GeneralApiProblem> {
+    this.apisauce.setHeader("Authorization", `Bearer ${token}`)
     const response: ApiResponse<any> = await this.apisauce.get(`user`)
-
+    
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem
     }
 
-    const rawData = response.data
-    const users: any[] = rawData?.items
-
+    const users = response.data.users
+    console.log(users, "users");
+    
     return { kind: "ok", users }
   }
 
@@ -40,17 +42,14 @@ export class UserApi extends ApiClass {
     email: string,
     password: string,
   ): Promise<{ kind: "ok"; token: string } | GeneralApiProblem> {
-    console.log(this.apisauce.getBaseURL(), "this.apisauce")
-
     const response: ApiResponse<any> = await this.apisauce.post(`/user/login`, { email, password })
-    // afficher l'erreur
-    console.log(response)
-
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem
     }
     const token = response.data.token
+    console.log(token, "token");
+    
     return { kind: "ok", token }
   }
 }
