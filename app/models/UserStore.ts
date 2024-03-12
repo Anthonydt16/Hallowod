@@ -16,18 +16,18 @@ export const UserStoreModel = types
   .actions((store) => ({
     async fetchUsers(token: string) {
       const response = await userApi.getUsers(token)
-      
+
       if (response.kind === "ok") {
-        const userModels = response.users.map(user => UserModel.create({
-          email: user.email,
-          firstName: user.firstName,
-          id: user.id,
-          lastName: user.lastName,
-          role: user.role,
-        }));
-        console.log('userModels', userModels)
-        
-        store.setProp("users", userModels);
+        const userModels = response.users.map((user) =>
+          UserModel.create({
+            email: user.email,
+            firstName: user.firstName,
+            id: user.id,
+            lastName: user.lastName,
+            role: user.role,
+          }),
+        )
+        store.setProp("users", userModels)
       } else {
         console.error(`Error fetching users: ${JSON.stringify(response)}`)
       }
@@ -35,6 +35,8 @@ export const UserStoreModel = types
   }))
   .views((store) => ({
     get isAdmin() {
+      console.log("store.role", store.role)
+
       return store.role === RoleEnum.ADMIN
     },
     get isOwner() {

@@ -20,6 +20,7 @@ import { useStores } from "../models"
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
+import { BottomNavigator, BottomTabParamList } from "./BottomNavigator"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -38,6 +39,7 @@ export type AppStackParamList = {
   Welcome: undefined
   Login: undefined
   Demo: NavigatorScreenParams<DemoTabParamList>
+  Bottom: NavigatorScreenParams<BottomTabParamList>
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
@@ -59,6 +61,7 @@ const Stack = createNativeStackNavigator<AppStackParamList>()
 const AppStack = observer(function AppStack() {
   const {
     authenticationStore: { isAuthenticated },
+    userStore: { isAdmin },
   } = useStores()
 
   return (
@@ -71,6 +74,8 @@ const AppStack = observer(function AppStack() {
           <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
 
           <Stack.Screen name="Demo" component={DemoNavigator} />
+
+          {isAdmin && <Stack.Screen name="Bottom" component={BottomNavigator} />}
         </>
       ) : (
         <>

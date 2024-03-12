@@ -6,6 +6,7 @@ export const AuthenticationStoreModel = types
   .props({
     authToken: types.maybe(types.string),
     authEmail: "",
+    authRole: types.maybe(types.enumeration("RoleEnum", ["ADMIN", "OWNER", "USER"])),
   })
   .views((store) => ({
     get isAuthenticated() {
@@ -23,19 +24,20 @@ export const AuthenticationStoreModel = types
     setAuthToken(value?: string) {
       store.authToken = value
     },
-    
+
     async login(email: string, password: string) {
       const response = await userApi.login(email, password)
       if (response.kind === "ok") {
         return {
           email,
           token: response.token,
+          role: response.role,
         }
       } else {
         throw new Error("Error logging in")
       }
     },
-    
+
     setAuthEmail(value: string) {
       store.authEmail = value.replace(/ /g, "")
     },
