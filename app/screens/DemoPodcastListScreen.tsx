@@ -19,7 +19,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     // initially, kick off a background refresh without the refreshing UI
 
     function goNext() {
-      navigation.navigate("Bottom", { screen: "BottomNavigator", params: {} })
+      navigation.navigate("Bottom", { screen: "HomeAdmin" })
     }
     useEffect(() => {
       ;(async function load() {
@@ -65,7 +65,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
             <Text text={item.fullName + " " + item.email + " " + item.role} />
           )}
         />
-        {userStore.isAdmin && (
+        {authenticationStore.isAdmin && (
           <Button
             testID="next-screen-button"
             preset="reversed"

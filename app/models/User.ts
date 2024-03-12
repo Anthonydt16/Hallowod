@@ -4,7 +4,7 @@ import { withSetPropAction } from "./helpers/withSetPropAction"
 export enum RoleEnum {
   ADMIN = "admin",
   USER = "user",
-  Owner = "owner",
+  OWNER = "owner",
 }
 
 /**
@@ -17,7 +17,7 @@ export const UserModel = types
     firstName: "",
     lastName: "",
     email: "",
-    role: types.enumeration("RoleEnum", Object.values(RoleEnum)),
+    role: "",
   })
   .actions(withSetPropAction)
   .views((episode) => ({

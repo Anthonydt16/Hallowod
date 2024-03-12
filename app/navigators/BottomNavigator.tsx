@@ -7,11 +7,13 @@ import { Icon } from "../components"
 import { colors, spacing, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 import Config from "app/config"
-import { HomeAdminScreen } from "app/screens/HomeAdminScreen"
 import { ErrorBoundary } from "app/screens"
+import { FormAddContestNavigator } from "app/navigators/FormAddContestNavigator"
+import { HomeAdminScreen } from "app/screens/admin/HomeAdminScreen"
 
 export type BottomTabParamList = {
   HomeAdmin: undefined
+  FormAddContestNavigator: undefined
 }
 
 /**
@@ -54,8 +56,20 @@ export function BottomNavigator() {
           name="HomeAdmin"
           component={HomeAdminScreen}
           options={{
-            // tabBarLabel: translate("bottomTabNavigator.homeAdmin"),
             tabBarLabel: "Home Admin",
+
+            // tabBarLabel: translate("bottomTabNavigator.homeAdmin"),
+            tabBarIcon: ({ focused }) => (
+              <Icon icon="components" color={focused ? colors.tint : undefined} size={30} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="FormAddContestNavigator"
+          component={FormAddContestNavigator}
+          options={{
+            // tabBarLabel: translate("bottomTabNavigator.homeAdmin"),
+            tabBarLabel: "add contest",
             tabBarIcon: ({ focused }) => (
               <Icon icon="components" color={focused ? colors.tint : undefined} size={30} />
             ),

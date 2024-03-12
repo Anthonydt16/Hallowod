@@ -1,4 +1,17 @@
 const en = {
+  homeAdmin: {
+    title: "Home Admin",
+    subtitle: "This is the Home Admin screen",
+    addContest: "Add Contest",
+  },
+  addContest: {
+    title: "Add Contest",
+    subtitle: "This is the Add Contest screen",
+  },
+  bottomTabNavigator: {
+    homeAdmin: "Home Admin",
+    formAddContest: "Add Contest",
+  },
   common: {
     ok: "OK!",
     cancel: "Cancel",

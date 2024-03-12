@@ -16,7 +16,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [attemptsCount, setAttemptsCount] = useState(0)
   const {
-    authenticationStore: { authEmail, login, setAuthEmail, validationError, setAuthToken }  
+    authenticationStore: { authEmail, login, setAuthEmail, validationError, setAuthToken, setAuthRole }
   } = useStores()
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     const reponse = await login(authEmail, authPassword);
     
     setAuthToken(reponse?.token)
-    
+    setAuthRole(reponse?.role)
     setIsSubmitted(false)
     setAuthPassword("")
     setAuthEmail("")

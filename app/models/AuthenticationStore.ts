@@ -1,12 +1,13 @@
 import { userApi } from "app/services/api/user.api"
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { RoleEnum } from "./User"
 
 export const AuthenticationStoreModel = types
   .model("AuthenticationStore")
   .props({
     authToken: types.maybe(types.string),
     authEmail: "",
-    authRole: types.maybe(types.enumeration("RoleEnum", ["ADMIN", "OWNER", "USER"])),
+    authRole: types.maybe(types.enumeration("RoleEnum", Object.values(RoleEnum))),
   })
   .views((store) => ({
     get isAuthenticated() {
@@ -19,8 +20,14 @@ export const AuthenticationStoreModel = types
         return "must be a valid email address"
       return ""
     },
+    get isAdmin() {
+      return store.authRole === RoleEnum.ADMIN
+    },
   }))
   .actions((store) => ({
+    setAuthRole(value?:RoleEnum) {
+      store.authRole = value
+    },
     setAuthToken(value?: string) {
       store.authToken = value
     },
@@ -44,6 +51,7 @@ export const AuthenticationStoreModel = types
     logout() {
       store.authToken = undefined
       store.authEmail = ""
+      store.authRole = undefined
     },
   }))
 
