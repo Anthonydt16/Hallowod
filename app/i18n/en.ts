@@ -7,6 +7,10 @@ const en = {
   addContest: {
     title: "Add Contest",
     subtitle: "This is the Add Contest screen",
+    titleForm: "Form Add Contest",
+    nameContest: "Name Contest",
+    descriptionContest: "Description Contest",
+    addImage: "Add Image",
   },
   bottomTabNavigator: {
     homeAdmin: "Home Admin",
