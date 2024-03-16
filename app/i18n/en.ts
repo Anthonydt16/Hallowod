@@ -4,6 +4,7 @@ const en = {
     subtitle: "This is the Home Admin screen",
     addContest: "Add Contest",
   },
+  stepper: {},
   addContest: {
     title: "Add Contest",
     subtitle: "This is the Add Contest screen",
@@ -11,6 +12,9 @@ const en = {
     nameContest: "Name Contest",
     descriptionContest: "Description Contest",
     addImage: "Add Image",
+    titleAddCategory: "Add Category",
+    nameCategory: "Name Category",
+    descriptionCategory: "Description Category",
   },
   bottomTabNavigator: {
     homeAdmin: "Home Admin",
@@ -21,6 +25,12 @@ const en = {
     cancel: "Cancel",
     back: "Back",
     logOut: "Log Out",
+    next: "Next",
+    previous: "Previous",
+    submit: "Submit",
+    save: "Save",
+    update: "Update",
+    add: "Add",
   },
   welcomeScreen: {
     postscript:

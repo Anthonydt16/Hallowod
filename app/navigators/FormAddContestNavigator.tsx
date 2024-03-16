@@ -1,4 +1,4 @@
-import { StackScreenProps, createStackNavigator } from '@react-navigation/stack';
+import { StackScreenProps, createStackNavigator } from "@react-navigation/stack"
 
 import { CompositeScreenProps } from "@react-navigation/native"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
@@ -9,11 +9,12 @@ import { AddContestScreen } from "app/screens/admin/AddContestScreen"
 export type FormAddContestTabParamList = {
   AddContest: undefined
 }
-export type FormAddContestTabScreenPropsAppStackScreenProps<T extends keyof FormAddContestTabParamList> =
-  CompositeScreenProps<
-    StackScreenProps<FormAddContestTabParamList, T>,
-    AppStackScreenProps<keyof AppStackParamList>
-  >
+export type FormAddContestTabScreenPropsAppStackScreenProps<
+  T extends keyof FormAddContestTabParamList,
+> = CompositeScreenProps<
+  StackScreenProps<FormAddContestTabParamList, T>,
+  AppStackScreenProps<keyof AppStackParamList>
+>
 
 const Stack = createStackNavigator<FormAddContestTabParamList>()
 
@@ -25,12 +26,8 @@ export function FormAddContestNavigator() {
           headerShown: false,
         }}
       >
-        <Stack.Screen
-          name="AddContest"
-          component={AddContestScreen}
-        />
+        <Stack.Screen name="AddContest" component={AddContestScreen} />
       </Stack.Navigator>
     </ErrorBoundary>
   )
 }
-

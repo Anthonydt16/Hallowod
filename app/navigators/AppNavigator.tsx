@@ -71,10 +71,11 @@ const AppStack = observer(function AppStack() {
       {isAuthenticated ? (
         <>
           <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+          <Stack.Screen name="Demo" component={BottomNavigator} />
 
-          <Stack.Screen name="Demo" component={DemoNavigator} />
+          {/* <Stack.Screen name="Demo" component={DemoNavigator} /> */}
 
-          {isAdmin && <Stack.Screen name="Bottom" component={BottomNavigator} />}
+          {/* {isAdmin && <Stack.Screen name="Bottom" component={BottomNavigator} />} */}
         </>
       ) : (
         <>
